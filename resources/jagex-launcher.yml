@@ -10,8 +10,6 @@ script:
     - requirements: https://raw.githubusercontent.com/ericmedina024/jagex-launcher-linux/safer/resources/requirements.txt
     - runelite: https://github.com/runelite/launcher/releases/download/2.7.5/RuneLite.jar
     - runelite-launcher: https://raw.githubusercontent.com/ericmedina024/jagex-launcher-linux/safer/resources/runelite.sh
-    - hdos: https://cdn.hdos.dev/launcher/latest/hdos-launcher.jar
-    - hdos-launcher: https://raw.githubusercontent.com/ericmedina024/jagex-launcher-linux/refs/heads/safer/resources/hdos.sh
     - steamdeck-settings: https://raw.githubusercontent.com/ericmedina024/jagex-launcher-linux/refs/heads/safer/resources/steamdeck-settings.properties
   require-binaries: python3
   game:
@@ -38,13 +36,6 @@ script:
         key: InstallLocation
         prefix: $GAMEDIR
         value: C:\\Program Files (x86)\\Jagex Launcher\\Games\\RuneLite
-    - task:
-        name: set_regedit
-        type: REG_SZ
-        path: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\HDOS Launcher_is1
-        key: InstallLocation
-        prefix: $GAMEDIR
-        value: C:\\Program Files (x86)\\Jagex Launcher\\Games\\HDOS
     - execute:
         command: |
             # Adding this duplicate check for the EULA, because otherwise the user could go back, and then forward in the installer and lutris skips that check for some reason.
@@ -77,16 +68,6 @@ script:
     - chmodx: $GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/RuneLite/runelite.sh
     - execute:
         command: ln -s "$GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/RuneLite/runelite.sh" "$GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/RuneLite/RuneLite.exe"
-    - merge:
-        src: hdos
-        dst: "$GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/HDOS"
-    - chmodx: hdos
-    - merge:
-        src: hdos-launcher
-        dst: $GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/HDOS
-    - chmodx: $GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/HDOS/hdos.sh
-    - execute:
-        command: ln -s "$GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/HDOS/hdos.sh" "$GAMEDIR/drive_c/Program Files (x86)/Jagex Launcher/Games/HDOS/HDOS.exe"
     - merge:
         src: steamdeck-settings
         dst: $GAMEDIR
